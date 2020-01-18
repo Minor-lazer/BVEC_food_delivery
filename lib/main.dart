@@ -221,7 +221,7 @@ BoxShadow(
                         ? Radius.circular(containerBorderRadius)
                         : Radius.circular(0),
                   ),
-                  child: itemImage,
+                  child: itemImage,//Food Item Image
                 ),
               ),
               SizedBox(height: 20),
