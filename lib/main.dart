@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:food_delivery/bloc/listTileColorBloc.dart';
@@ -37,7 +39,7 @@ class Home extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             FirstHalf(),
-            SizedBox(height: 45),
+            SizedBox(height: 15),
             for (var foodItem in fooditemList.foodItems)
               Builder(
                 builder: (context) 
@@ -103,7 +105,7 @@ class FirstHalf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(35, 25, 0, 0),
+      padding: const EdgeInsets.fromLTRB(10, 25, 0, 0),
       child: Column(
         children: <Widget>[
           CustomAppBar(),
@@ -184,6 +186,19 @@ class Items extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
+          margin: EdgeInsets.only(bottom: 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+             boxShadow:[
+BoxShadow(
+  color: Colors.black.withOpacity(.1),
+  blurRadius: 4.0,
+  offset: Offset(1, 1),
+  spreadRadius: 4.0
+),
+
+                    ]
+          ),
           padding: EdgeInsets.only(
             left: leftAligned ? 0 : containerPadding,
             right: leftAligned ? containerPadding : 0,
@@ -194,7 +209,9 @@ class Items extends StatelessWidget {
                 width: double.infinity,
                 height: 200,
                 decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    BoxDecoration(borderRadius: BorderRadius.circular(10),
+                    color: Colors.white,
+                    ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.horizontal(
                     left: leftAligned
@@ -204,10 +221,7 @@ class Items extends StatelessWidget {
                         ? Radius.circular(containerBorderRadius)
                         : Radius.circular(0),
                   ),
-                  child: Image.network(
-                    itemName,
-                    fit: BoxFit.fill,
-                  ),
+                  child: itemImage,//Food Item Image
                 ),
               ),
               SizedBox(height: 20),
@@ -279,40 +293,37 @@ class CategoryListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+     
       margin: EdgeInsets.only(right: 20),
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+      padding: EdgeInsets.fromLTRB(5, 10, 10, 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         color: selected ? Themes.color : Colors.white,
         border: Border.all(
-            color: selected ? Colors.transparent : Colors.grey[200],
+            color: selected ? Colors.orangeAccent.shade100 : Colors.grey[200],
             width: 1.5),
         boxShadow: [
           BoxShadow(
             color: Colors.grey[100],
             blurRadius: 15,
-            offset: Offset(15, 0),
+            offset: Offset(0, 0),
             spreadRadius: 5,
           )
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: selected?Colors.orangeAccent:Colors.white,
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                    color: selected ? Colors.transparent : Colors.grey[200],
+                    color: selected ? Colors.orangeAccent : Colors.grey[200],
                     width: 1.5)),
-              child: Image
-              (
-              //categoryImage,
-              color: Colors.black,
-              image: null,
-             ),
+              child: IconButton(onPressed: null, icon:Icon(categoryIcon,color: selected?Colors.white:Colors.grey),) //Added Category Icon
+              
           ),
           SizedBox(height: 10),
           Text(
@@ -367,18 +378,23 @@ Widget searchBar() {
 Widget title() {
   
   return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
-      SizedBox(width: 45),
+      // SizedBox(width: 45),
       Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Container(  
-            child:new Image.asset(
-              'icons/truck.png',
-              width: 300,
-              height: 150,
-              fit:BoxFit.fill  ),
+          new Container( 
+           
+            child:Center(
+             
+              child: new Image.asset(
+                'icons/food.png',
+                width: 100,
+                height: 100,
+                fit:BoxFit.fill  ),
+            ),
 
           )
           
@@ -426,8 +442,10 @@ class CustomAppBar extends StatelessWidget {
         }
       },
       child: Container(
+        width: 50,
+        height: 50,
         margin: EdgeInsets.only(right: 30),
-        child: Text(length.toString()),
+        child: Center(child: Text(length.toString(),style: TextStyle(color: Colors.white,fontWeight: FontWeight.w800,fontSize: 20),)),
         padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
             color: Colors.yellow[800], borderRadius: BorderRadius.circular(50)),
